@@ -3,14 +3,12 @@ import os
 import cv2 
 import numpy as np 
 
-
-
 #Borra terminal en windows
 os.system('cls')
 
 # Pregunta a usuario por el factor del zoom
 factor = int(input("Ingrese el factor del zoom a aplicar en la imagen:"))
- 
+
 # Create point matrix get coordinates of mouse click on image
 point_matrix = np.zeros((2,2),int)
 
