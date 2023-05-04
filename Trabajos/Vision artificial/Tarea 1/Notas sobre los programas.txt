@@ -1,0 +1,4 @@
+"original.jpg" es una paleta de colores, "original2.jpg" es una imagen mas compleja en
+la distribución de colores. Para las pruebas se utilizó "original.jpg", pero para 
+ciertas preguntas (como la 2 y la 4), se obtienen resultados mas aparentes con "original2.jpg"
+
