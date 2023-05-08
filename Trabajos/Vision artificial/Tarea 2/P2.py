@@ -1,41 +1,25 @@
-for var in globals().copy():
-    if not var.startswith("_"):
-        del globals()[var]
 import numpy as np
 import cv2
 
-"""img = np.array([
-    [[1],[2],[3]],
-    [[4],[5],[6]],
-    [[7],[8],[9]]
-])"""
-# Cargar imagen en color
-img = cv2.imread("imagen1.jpg")
+img = cv2.imread("imagen1.jpg", cv2.IMREAD_GRAYSCALE)
 
-print(img.shape,"\n")
-filaDeCeros =np.zeros((1,img.shape[1],img.shape[2]), dtype=np.uint8)
-#print(filaDeCeros)
-#print(filaDeCeros.shape)
+filaDeCeros =np.zeros((1,img.shape[1]), dtype=np.uint8)
 ampliada = np.insert(img, np.s_[::1], filaDeCeros, axis=0)
-#print(ampliada.shape,"\n")
 ampliada = np.vstack((ampliada, filaDeCeros))
-#print(ampliada.shape,"\n")
-columnaDeCeros = np.zeros((ampliada.shape[0],1,img.shape[2]), dtype=np.uint8)
-#print(columnaDeCeros)
-#print(columnaDeCeros.shape)
+columnaDeCeros = np.zeros((ampliada.shape[0],1), dtype=np.uint8)
 ampliada = np.insert(ampliada,np.s_[0::1],columnaDeCeros, axis = 1)
-#print(ampliada.shape,"\n")
 ampliada = np.hstack((ampliada,columnaDeCeros))
-print(ampliada.shape,"\n")
-#print(ampliada,"\n")
 
-cv2.imshow('Imagen', img)
-cv2.imshow('Ampliada antes de proceso', ampliada)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+#cv2.imshow('Imagen', img)
+#cv2.imshow('Ampliada antes de proceso', ampliada)
+#cv2.waitKey(0)
+#cv2.destroyAllWindows()
+
 
 mascara_conv = np.array([[0.25,0.5 ,0.25],[0.5,1 ,0.5],[0.25,0.5 ,0.25]])
-region_conv = ampliada[1:-1,1:-1,:]
+region_conv = ampliada[1:-1,1:-1]
+print("Fin del algoritmo")
+"""
 #print(mascara_conv.shape)
 #print(region_conv.shape)
 #print(img.shape)
@@ -80,5 +64,5 @@ for i,j in enumerate(indices):
 cv2.imshow('Imagen', img)
 cv2.imshow('Ampliada', ampliada)
 cv2.waitKey(0)
-cv2.destroyAllWindows()
+cv2.destroyAllWindows()"""
 
