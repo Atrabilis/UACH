@@ -2,6 +2,7 @@
 import cv2
 import numpy as np
 import random
+import matplotlib.pyplot as plt
 
 #Funcion que crea los histogramas con enteros aleatorios
 def crear_lista_enteros_positivos_aleatorios(M,niveles_de_gris):
@@ -9,7 +10,7 @@ def crear_lista_enteros_positivos_aleatorios(M,niveles_de_gris):
     
     for i in range(256):
         if sum(lista) < M-max(niveles_de_gris):
-            lista[i] = random.randint(0,max(niveles_de_gris))
+            lista[i] = random.randint(0,int(max(niveles_de_gris)))
         else:
             break
     
@@ -49,18 +50,30 @@ niveles_de_gris = histograma(img)
 suma_desplazamiento= ecualizacion_histograma(niveles_de_gris)
 
 #Histogramas deseados aleatorios (Paso II)
-histograma_deseado_1 = crear_lista_enteros_positivos_aleatorios(NUMERO_PIXELES,niveles_de_gris)
-histograma_deseado_2 = crear_lista_enteros_positivos_aleatorios(NUMERO_PIXELES,niveles_de_gris)
-histograma_deseado_3 = crear_lista_enteros_positivos_aleatorios(NUMERO_PIXELES,niveles_de_gris)
+histograma_deseado= crear_lista_enteros_positivos_aleatorios(NUMERO_PIXELES,niveles_de_gris)
 
-#Mapeos (paso III)
+
+#Mapeo (paso III)
 mapeo1= [0] * 256
 mapeo2= [0] * 256
 mapeo3= [0] * 256
 
 for i in range(1,256):
-    mapeo1[i] = round((sum(histograma_deseado_1[:i])/sum(histograma_deseado_1))*255)
-    mapeo2[i] = round((sum(histograma_deseado_2[:i])/sum(histograma_deseado_2))*255)
-    mapeo3[i] = round((sum(histograma_deseado_3[:i])/sum(histograma_deseado_3))*255)
+    mapeo1[i] = round((sum(histograma_deseado[:i])/sum(histograma_deseado))*255)
+
+fig, axs = plt.subplots(2, 1)
+
+axs[0].plot(list(range(256)), niveles_de_gris)
+axs[0].set_title('Histograma original')
+
+axs[1].plot(list(range(256)), histograma_deseado)
+axs[1].set_title('Histograma deseado')
+
+
+# Ajustamos el tamaño de los subplots
+plt.tight_layout()
+
+# Mostramos el gráfico
+plt.show()
     
 print("Programa finalizado")
