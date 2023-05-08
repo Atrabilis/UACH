@@ -1,43 +1,40 @@
 import cv2
 import numpy as np
+import random
+
+def crear_lista_enteros_positivos_aleatorios(M,niveles_de_gris):
+    lista = [0] * 256
+    
+    for i in range(256):
+        if sum(lista) < M-max(niveles_de_gris):
+            lista[i] = random.randint(0,max(niveles_de_gris))
+        else:
+            break
+    
+    suma_actual = sum(lista)
+    
+    while suma_actual < M:
+        i = random.randint(0, 255)
+        lista[i] += 1
+        suma_actual += 1
+    
+    return lista
 
 img = cv2.imread("imagen1.jpg",cv2.IMREAD_GRAYSCALE)
 
-h, w = img.shape[:2]
-M = h * w
+NUMERO_PIXELES = img.shape[0]*img.shape[1]
+niveles_de_gris = [0 for i in range(256)]
 
-region_conv1 = np.copy(img[1:-1,1:-1])
-region_conv2 = np.copy(img[1:-1,1:-1])
+for i in img:
+    for j in i:
+        niveles_de_gris[j] +=1
 
-#Filtro Promedio
-promedios = []
-indices = []
-for i, j in np.ndindex(region_conv1.shape[:2]):
-    promedios.append(np.mean(img[i:i+3,j:j+3]))
-    if len(indices) != region_conv1.shape[0]*region_conv1.shape[1]:
-        indices.append((i,j))
-
-for i,j in enumerate(indices):
-    region_conv1[j[0],j[1]] = promedios[i]
-    
-#Filtro Medio
-medianas = []
-indices = []
-for i, j in np.ndindex(region_conv2.shape[:2]):
-    matriz_orden = img[i:i+3,j:j+3]
-    matriz_orden = np.sort(matriz_orden)
-    medianas.append(matriz_orden[1][1])
-    if len(indices) != region_conv1.shape[0]*region_conv1.shape[1]:
-        indices.append((i,j))
-
-for i,j in enumerate(indices):
-    region_conv2[j[0],j[1]] = medianas[i]
-
-
-cv2.imshow('Imagen', img)
-cv2.imshow("Filtro promedio", region_conv1)
-cv2.imshow("Filtro Medio", region_conv2)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+histograma_deseado_1 = crear_lista_enteros_positivos_aleatorios(NUMERO_PIXELES,niveles_de_gris)
+histograma_deseado_2 = crear_lista_enteros_positivos_aleatorios(NUMERO_PIXELES,niveles_de_gris)
+histograma_deseado_3 = crear_lista_enteros_positivos_aleatorios(NUMERO_PIXELES,niveles_de_gris)
+#print(sum(histograma_deseado_1))
+#print(sum(histograma_deseado_2))
+#print(sum(histograma_deseado_3))
+#print(sum(niveles_de_gris))
 
 print("Programa finalizado")
