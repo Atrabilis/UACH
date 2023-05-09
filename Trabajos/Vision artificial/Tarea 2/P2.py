@@ -69,6 +69,7 @@ def mousePoints(event,x,y,flags,params):
 
 #Lee y almacena la imagen
 img = cv2.imread("imagen1.jpg", cv2.IMREAD_GRAYSCALE)
+cv2.imwrite("referencia1.jpg", img)
 
 print("Haga click derecho en el vertice de inicio y en el vertice final, de arriba a"+ 
       " la izquierda hacia abajo a la derecha")
@@ -109,11 +110,12 @@ while True:
 mascara_conv = np.array([[0.25,0.5 ,0.25],[0.5,1 ,0.5],[0.25,0.5 ,0.25]])
 
 #imagen con el zoom implementado
-zoom= realizar_zoom(img_cropped,factor)
+zoom = realizar_zoom(img_cropped,factor)
+zoom = cv2.cvtColor(zoom, cv2.COLOR_BGR2GRAY)
+print(type(zoom))
 
 #Muestra las imagenes
 cv2.imshow("Imagen Despues del zoom digital", zoom)
-#Espera un input y destruye las ventanas
 
 # zoom de cv
 def zoom(img, zoom_factor):
@@ -121,9 +123,13 @@ def zoom(img, zoom_factor):
 
 zoomed_and_cropped = zoom(img_cropped, factor)
 
+cv2.imwrite("zoomcv1.jpg", zoomed_and_cropped)
+cv2.imwrite("zoom1.jpg", zoom)
+
 cv2.imshow("Imagen zoom cv", zoomed_and_cropped )
 
 print("presione cualquier tecla para salir") 
+#Espera un input y destruye las ventanas
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
