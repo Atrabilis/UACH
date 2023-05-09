@@ -111,7 +111,6 @@ mascara_conv = np.array([[0.25,0.5 ,0.25],[0.5,1 ,0.5],[0.25,0.5 ,0.25]])
 
 #imagen con el zoom implementado
 zoom = realizar_zoom(img_cropped,factor)
-zoom = cv2.cvtColor(zoom, cv2.COLOR_BGR2GRAY)
 print(type(zoom))
 
 #Muestra las imagenes
@@ -124,7 +123,6 @@ def zoom(img, zoom_factor):
 zoomed_and_cropped = zoom(img_cropped, factor)
 
 cv2.imwrite("zoomcv1.jpg", zoomed_and_cropped)
-cv2.imwrite("zoom1.jpg", zoom)
 
 cv2.imshow("Imagen zoom cv", zoomed_and_cropped )
 
