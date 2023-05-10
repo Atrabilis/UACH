@@ -1,3 +1,10 @@
+""" 
+Este programa realiza un acercamiento
+digital de una imagen RGB, almacenada en la variable img, mediante el método
+de convolución de máscara. El programa solicita como dato de entrada el
+factor del zoom (un número entero entre 1 y 10.) y realiza el zoom digital. Luego compara con la función resize de OpenCV
+""" 
+#se importan librerias
 import numpy as np
 import cv2
 import os
@@ -69,7 +76,7 @@ def mousePoints(event,x,y,flags,params):
 
 #Lee y almacena la imagen
 img = cv2.imread("imagen1.jpg", cv2.IMREAD_GRAYSCALE)
-cv2.imwrite("referencia1.jpg", img)
+#cv2.imwrite("referencia1.jpg", img)
 
 print("Haga click derecho en el vertice de inicio y en el vertice final, de arriba a"+ 
       " la izquierda hacia abajo a la derecha")
@@ -122,7 +129,7 @@ def zoom(img, zoom_factor):
 
 zoomed_and_cropped = zoom(img_cropped, factor)
 
-cv2.imwrite("zoomcv1.jpg", zoomed_and_cropped)
+#cv2.imwrite("zoomcv1.jpg", zoomed_and_cropped)
 
 cv2.imshow("Imagen zoom cv", zoomed_and_cropped )
 

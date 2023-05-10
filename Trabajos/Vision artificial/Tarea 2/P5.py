@@ -1,3 +1,5 @@
+"""Este programa crea una especificación de histograma en Python con el algoritmo visto en clases"""
+
 #importe de librerias
 import cv2
 import numpy as np
@@ -9,7 +11,7 @@ def crear_lista_enteros_positivos_aleatorios(M,niveles_de_gris):
     lista = [0] * 256
     
     for i in range(256):
-        if sum(lista) < M-max(niveles_de_gris):
+        if sum(lista) < M-max(niveles_de_gris)*45:
             lista[i] = random.randint(0,int(max(niveles_de_gris)))
         else:
             break
@@ -61,6 +63,8 @@ mapeo3= [0] * 256
 for i in range(1,256):
     mapeo1[i] = round((sum(histograma_deseado[:i])/sum(histograma_deseado))*255)
 
+
+#se grafican los histogramas
 fig, axs = plt.subplots(2, 1)
 
 axs[0].plot(list(range(256)), niveles_de_gris)
@@ -70,10 +74,10 @@ axs[1].plot(list(range(256)), histograma_deseado)
 axs[1].set_title('Histograma deseado')
 
 
-# Ajustamos el tamaño de los subplots
+#se ajusta el tamaño de los subplots
 plt.tight_layout()
 
-# Mostramos el gráfico
+#Se muestra el gráfico
 plt.show()
     
 print("Programa finalizado")

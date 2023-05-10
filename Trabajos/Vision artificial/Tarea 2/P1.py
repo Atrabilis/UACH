@@ -16,10 +16,10 @@ import os
 #Lee la imagen
 img = cv2.imread(os.path.dirname(__file__) + '\imagen1.jpg')
 #Coordenadas de los vértices
-f1 = int(input("Ingrese la fila del vértice superior izquierdo: "))
-c1 = int(input("Ingrese la columna del vértice superior izquierdo: "))
-f2 = int(input("Ingrese la fila del vértice inferior derecho: "))
-c2 = int(input("Ingrese la columna del vértice inferior derecho: "))
+f1 = int(input("Ingrese la fila del vértice inferior izquierdo: "))
+c1 = int(input("Ingrese la columna del vértice inferior izquierdo: "))
+f2 = int(input("Ingrese la fila del vértice superior derecho: "))
+c2 = int(input("Ingrese la columna del vértice superior derecho: "))
 
 vertices = [f1,c1,f2,c2]
 # Comprueba que los datos hayan sido ingresados correctamente
