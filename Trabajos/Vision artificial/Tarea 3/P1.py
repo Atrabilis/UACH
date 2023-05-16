@@ -20,6 +20,7 @@ _, thresholded_image3 = cv2.threshold(image3, 0, 255, cv2.THRESH_BINARY + cv2.TH
 _, thresholded_image4 = cv2.threshold(image4, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 _, thresholded_image5 = cv2.threshold(image5, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
+#concatena las imagenes
 concatenated_image1 = np.hstack((image1, thresholded_image1))
 concatenated_image2 = np.hstack((image2, thresholded_image2))
 concatenated_image3 = np.hstack((image3, thresholded_image3))
