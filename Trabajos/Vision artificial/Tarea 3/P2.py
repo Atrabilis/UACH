@@ -20,8 +20,8 @@ print(roberts.shape)
 
 #Muestra y guarda las imagenes, espera un input y destruye las ventanas
 cv2.imshow("Original", img)
-cv2.imshow('Imagen binaria', binaria)
-cv2.imshow('Operador Roberts', roberts)
+cv2.imshow("Imagen binaria", binaria)
+cv2.imshow("Operador Roberts", roberts)
 cv2.imwrite("binariaroberts.jpg", binaria)
 cv2.imwrite("roberts.jpg", roberts)
 cv2.waitKey(0)

@@ -17,7 +17,7 @@ prewitt= operador_prewitt(img)
 
 #Muestra y guarda las imagenes, espera un input y destruye las ventanas
 cv2.imshow("Original", img)
-cv2.imshow('Operador Prewitt', prewitt)
+cv2.imshow("Operador Prewitt", prewitt)
 cv2.imwrite("prewitt.jpg", prewitt)
 cv2.waitKey(0)
 cv2.destroyAllWindows()

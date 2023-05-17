@@ -1,10 +1,11 @@
-#Este programa implementa el operador Frei-Chen en Python
+#Este programa implementa el operador de Kirsch en Python
 
 #Importe de librerias
 import cv2 
 import numpy as np
 from Funciones.clear import clear
-from Funciones.operador_frei_chen import operador_frei_chen
+from Funciones.operador_robinson import operador_robinson
+
 
 #limpia la consola
 clear()
@@ -13,11 +14,11 @@ clear()
 img = cv2.imread("objetos.jpg")
 
 #Aplica el operador prewitt
-frei_chen= operador_frei_chen(img)
+robinson= operador_robinson(img)
 
 #Muestra y guarda las imagenes, espera un input y destruye las ventanas
 cv2.imshow("Original", img)
-cv2.imshow("Operador Frei Chen", frei_chen)
-cv2.imwrite("freichen.jpg", frei_chen)
+cv2.imshow("Operador Robinson", robinson)
+cv2.imwrite("robinson.jpg", robinson)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
