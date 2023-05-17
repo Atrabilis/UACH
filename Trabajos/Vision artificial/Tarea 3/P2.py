@@ -16,11 +16,14 @@ img = cv2.imread("objetos.jpg",0)
 _, binaria = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
 roberts = operador_roberts(binaria)
-print(roberts)
+print(roberts.shape)
 
-#Muestra las imagenes, espera un input y destruye las ventanas
+#Muestra y guarda las imagenes, espera un input y destruye las ventanas
+cv2.imshow("Original", img)
 cv2.imshow('Imagen binaria', binaria)
 cv2.imshow('Operador Roberts', roberts)
+cv2.imwrite("binariaroberts.jpg", binaria)
+cv2.imwrite("roberts.jpg", roberts)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
