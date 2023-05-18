@@ -1,10 +1,10 @@
-#Este programa implementa el operador de Robinson en Python
+#Este programa implementa el primer operador Laplaciano visto en clases en Python.
 
 #Importe de librerias
 import cv2 
 import numpy as np
 from Funciones.clear import clear
-from Funciones.operador_robinson import operador_robinson
+from Funciones.operador_laplaciano import operador_laplaciano
 
 #limpia la consola
 clear()
@@ -13,11 +13,11 @@ clear()
 img = cv2.imread("objetos.jpg")
 
 #Aplica el operador prewitt
-robinson= operador_robinson(img)
+laplaciano= operador_laplaciano(img, 1)
 
 #Muestra y guarda las imagenes, espera un input y destruye las ventanas
 cv2.imshow("Original", img)
-cv2.imshow("Operador Robinson", robinson)
-cv2.imwrite("robinson.jpg", robinson)
+cv2.imshow("Operador Laplaciano", laplaciano)
+cv2.imwrite("laplaciano1.jpg", laplaciano)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
