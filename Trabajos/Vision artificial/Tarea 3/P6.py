@@ -27,7 +27,9 @@ for i in range(len(cnt)):
     #Punto actual
     point1 = cnt[i][0]
     #Punto siguiente
-    point2 = cnt[(i+1) % len(cnt)][0]
+    point2 = cnt[(i+1) % len(cnt)][0] #El modulo asegura que el índice i+1 esté 
+    #dentro del rango válido de índices del contorno cnt.
+    
     #Calculamos la distancia entre los puntos
     distance = cv2.norm(point1, point2, cv2.NORM_L2)
     perimetro += distance
