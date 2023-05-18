@@ -3,6 +3,7 @@
 #Importe de librerias
 import cv2 
 import numpy as np
+import os
 from Funciones.clear import clear
 from Funciones.operador_prewitt import operador_prewitt
 
@@ -10,7 +11,7 @@ from Funciones.operador_prewitt import operador_prewitt
 clear()
 
 #Lee y almacena la imagen
-img = cv2.imread("objetos.jpg")
+img = cv2.imread(os.path.dirname(__file__) + '\objetos.jpg')
 
 #Aplica el operador prewitt
 prewitt= operador_prewitt(img)

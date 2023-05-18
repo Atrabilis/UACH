@@ -3,6 +3,7 @@
 #Importe de librerias
 import cv2 
 import numpy as np
+import os
 from Funciones.clear import clear
 from Funciones.operador_robinson import operador_robinson
 
@@ -10,7 +11,7 @@ from Funciones.operador_robinson import operador_robinson
 clear()
 
 #Lee y almacena la imagen
-img = cv2.imread("objetos.jpg")
+img = cv2.imread(os.path.dirname(__file__) + '\objetos.jpg')
 
 #Aplica el operador prewitt
 robinson= operador_robinson(img)

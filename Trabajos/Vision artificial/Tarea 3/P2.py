@@ -3,6 +3,7 @@
 #Importe de librerias
 import cv2 
 import numpy as np
+import os
 from Funciones.clear import clear
 from Funciones.operador_roberts import operador_roberts
 
@@ -10,7 +11,7 @@ from Funciones.operador_roberts import operador_roberts
 clear()
 
 #Lee y almacena la imagen
-img = cv2.imread("objetos.jpg",0)
+img = cv2.imread(os.path.dirname(__file__) + '\objetos.jpg',0)
 
 #Convierte img a una imagen binaria usando el metodo Otsu implementado en openCV
 _, binaria = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)

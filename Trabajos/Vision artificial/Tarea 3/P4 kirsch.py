@@ -2,6 +2,7 @@
 
 #Importe de librerias
 import cv2 
+import os
 import numpy as np
 from Funciones.clear import clear
 from Funciones.operador_kirsch import operador_kirsch
@@ -11,7 +12,7 @@ from Funciones.operador_kirsch import operador_kirsch
 clear()
 
 #Lee y almacena la imagen
-img = cv2.imread("objetos.jpg")
+img = cv2.imread(os.path.dirname(__file__) + '\objetos.jpg')
 
 #Aplica el operador prewitt
 kirsch= operador_kirsch(img)
