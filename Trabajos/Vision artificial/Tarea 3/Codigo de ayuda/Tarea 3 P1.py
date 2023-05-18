@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 import os
 
 # Lee imagen
-img = cv.imread(os.path.dirname(__file__) + '\imagen2.jpg')
+img = cv.imread(os.path.dirname(__file__) + '\papagayo.jpg')
 
 
 # Transforma a escala de grises
