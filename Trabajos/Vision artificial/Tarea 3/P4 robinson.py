@@ -1,4 +1,4 @@
-#Este programa implementa el operador de Kirsch en Python
+#Este programa implementa el operador de Robinson en Python
 
 #Importe de librerias
 import cv2 
