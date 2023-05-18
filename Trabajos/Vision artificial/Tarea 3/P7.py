@@ -12,7 +12,7 @@ from Funciones.clear import clear
 clear()
 
 #Lee la imagen y la convierte a escala de grises
-img = cv2.imread(os.path.dirname(__file__) + '\objetos.jpg')
+img = cv2.imread(os.path.dirname(__file__) + '\star.jpg')
 gris = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 #Aplica umbralización para obtener una imagen binaria

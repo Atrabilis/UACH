@@ -1,4 +1,3 @@
-import numpy as np
 import cv2
 import os
 from Funciones.clear import clear
@@ -6,7 +5,7 @@ from Funciones.clear import clear
 clear()
 
 #Lee y almacena la imagen
-img = cv2.imread(os.path.dirname(__file__) + '\objetos.jpg')
+img = cv2.imread(os.path.dirname(__file__) + '\star.jpg')
 
 #Transforma a escala de grises
 imgGris = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
