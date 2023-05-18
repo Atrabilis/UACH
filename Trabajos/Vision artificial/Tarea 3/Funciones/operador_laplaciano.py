@@ -14,6 +14,9 @@ def operador_laplaciano(imagen,mascara):
                         [-1, 8, -1],
                         [-1, -1, -1]])
                 ]
+    #Convierte la imagen a escala de grises si no lo está
+    if len(imagen.shape) == 3:
+        imagen = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
     # Aplicar la convolución
     if mascara == 1:
         laplaciano = cv2.filter2D(imagen, -1, mascaras[0])
