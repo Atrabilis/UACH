@@ -1,43 +1,46 @@
 #Este codigo codifica cada uno de los objetos de la imagen “objetos.jpg” utilizando
-#código cadenay luego crea una nueva imagen en donde los objetos son generados
+#código cadena y luego crea una nueva imagen en donde los objetos son generados
 #a partir del código cadena obtenido anteriormente.
-import cv2
-import os
+
 import numpy as np
-from Funciones.clear import clear
-from Funciones.cadena import *
+import cv2 as cv
 
-#Limpia la consola
-clear()
+def detectar_bordes(imagen, umbral=240):
+    # Convertir la imagen a escala de grises
+    imagen_gris = cv.cvtColor(imagen, cv.COLOR_BGR2GRAY)
 
-#Carga la imagen
-img = cv2.imread("./Codigo de ayuda/objetos.jpg")
+    # Transformar a imagen binaria utilizando el umbral
+    _, imagen_binaria = cv.threshold(imagen_gris, umbral, 255, cv.THRESH_BINARY)
 
-#Crea una nueva imagen con fondo blanco del mismo tamaño que la imagen original
-imagen = np.zeros_like(img) + 255
+    # Obtener dimensiones de la imagen
+    alto, ancho = imagen_binaria.shape[:2]
 
-#Convierte la imagen a escala de grises
-imagen_gris = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # Matriz con coordenadas (fil, col) de los bordes
+    bordes = []
 
-#Aplica umbral para binarizar la imagen
-umbral, imagen_umbral = cv2.threshold(imagen_gris, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
-imagen_umbral = cv2.bitwise_not(imagen_umbral)
+    # Barrido de la matriz
+    for fil in range(1, alto - 1):
+        for col in range(1, ancho - 1):
+            # Buscar bordes
+            if imagen_binaria[fil, col] == 255:
+                if (imagen_binaria[fil - 1, col] == 0 or imagen_binaria[fil + 1, col] == 0 or
+                        imagen_binaria[fil, col - 1] == 0 or imagen_binaria[fil, col + 1] == 0):
+                    bordes.append((fil, col))
 
-#Encuentra los contornos en la imagen binarizada
-contornos = encontrar_contornos(imagen_umbral)
+    # Crear una matriz de bordes
+    imagen_bordes = np.zeros((alto, ancho), dtype='uint8')
+    for punto in bordes:
+        imagen_bordes[punto] = 255
 
-#Convierte los contornos a un formato adecuado
-contornos_np = [np.array(contorno) for contorno in contornos]
-
-#Dibuja los contornos
-cv2.drawContours(imagen, contornos_np, -1, (0, 0, 255), 2)
-
-#Muestra la imagen con los contornos
-cv2.imshow("codificada", imagen)
-cv2.imshow("original", img)
-cv2.imwrite("cadena.jpg", imagen)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+    return imagen_bordes
 
 
+# Ejemplo de uso:
+imagen_entrada = cv.imread('./Codigo_de_ayuda/objetos.jpg')
+imagen_bordes = detectar_bordes(imagen_entrada)
 
+# Mostrar la imagen con los bordes detectados
+cv.imshow("Bordes detectados", imagen_bordes)
+cv.imwrite("cadena.jpg", imagen_bordes)
+cv.waitKey(0)
+cv.destroyAllWindows()

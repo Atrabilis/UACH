@@ -3,7 +3,7 @@ import cv2 as cv
 import os
 from matlab_functions import bwareaopen, bwlabel
 
-A = cv.imread(os.path.dirname(__file__) + '\objetos.jpg')
+A = cv.imread(os.path.dirname(__file__) + '.\Codigo de ayuda\objetos.jpg')
 Agris = cv.cvtColor(A, cv.COLOR_BGR2GRAY)
 
 # Especifica valor de umbral

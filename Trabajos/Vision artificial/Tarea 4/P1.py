@@ -13,7 +13,7 @@ import matplotlib.image as mpimg
 clear()
 
 #Carga la imagen
-img = cv2.imread(os.path.dirname(__file__) + "./Codigo de ayuda/figuras.jpg", 0)
+img = cv2.imread(os.path.dirname(__file__) + "./Codigo_de_ayuda/figuras.jpg", 0)
 
 #Coeficientes y polinomios
 
