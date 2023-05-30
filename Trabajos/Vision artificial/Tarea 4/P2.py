@@ -1,46 +1,46 @@
-#Este codigo codifica cada uno de los objetos de la imagen “objetos.jpg” utilizando
-#código cadena y luego crea una nueva imagen en donde los objetos son generados
-#a partir del código cadena obtenido anteriormente.
-
+import cv2
 import numpy as np
-import cv2 as cv
 
-def detectar_bordes(imagen, umbral=240):
-    # Convertir la imagen a escala de grises
-    imagen_gris = cv.cvtColor(imagen, cv.COLOR_BGR2GRAY)
+def codificar_cadena(contorno):
+    codificacion_cadena = ""
 
-    # Transformar a imagen binaria utilizando el umbral
-    _, imagen_binaria = cv.threshold(imagen_gris, umbral, 255, cv.THRESH_BINARY)
+    for pixel in contorno:
+        codificacion_cadena += str(pixel)
 
-    # Obtener dimensiones de la imagen
-    alto, ancho = imagen_binaria.shape[:2]
+    return codificacion_cadena
 
-    # Matriz con coordenadas (fil, col) de los bordes
-    bordes = []
+def decodificar_cadena(codificacion_cadena):
+    contorno_decodificado = []
 
-    # Barrido de la matriz
-    for fil in range(1, alto - 1):
-        for col in range(1, ancho - 1):
-            # Buscar bordes
-            if imagen_binaria[fil, col] == 255:
-                if (imagen_binaria[fil - 1, col] == 0 or imagen_binaria[fil + 1, col] == 0 or
-                        imagen_binaria[fil, col - 1] == 0 or imagen_binaria[fil, col + 1] == 0):
-                    bordes.append((fil, col))
+    for i in range(len(codificacion_cadena)):
+        contorno_decodificado.append(int(codificacion_cadena[i]))
 
-    # Crear una matriz de bordes
-    imagen_bordes = np.zeros((alto, ancho), dtype='uint8')
-    for punto in bordes:
-        imagen_bordes[punto] = 255
+    return contorno_decodificado
 
-    return imagen_bordes
+# Cargar imagen de OpenCV
+imagen = cv2.imread('./Codigo_de_ayuda/objetos.jpg', cv2.IMREAD_GRAYSCALE)
 
+# Aplicar umbralización de Otsu para obtener una imagen binaria
+_, umbral_otsu = cv2.threshold(imagen, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 
-# Ejemplo de uso:
-imagen_entrada = cv.imread('./Codigo_de_ayuda/objetos.jpg')
-imagen_bordes = detectar_bordes(imagen_entrada)
+# Obtener contornos de los objetos en la imagen binaria
+contornos, _ = cv2.findContours(umbral_otsu, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
-# Mostrar la imagen con los bordes detectados
-cv.imshow("Bordes detectados", imagen_bordes)
-cv.imwrite("cadena.jpg", imagen_bordes)
-cv.waitKey(0)
-cv.destroyAllWindows()
+# Crear una copia de la imagen en color para dibujar los contornos
+imagen_contornos = cv2.cvtColor(imagen, cv2.COLOR_GRAY2BGR)
+
+# Dibujar los contornos en la imagen
+cv2.drawContours(imagen_contornos, contornos, -1, (0, 255, 0), 2)
+
+# Codificar el contorno utilizando cadena
+contorno = np.concatenate(contornos).ravel().tolist()
+codificacion_cadena = codificar_cadena(contorno)
+
+# Decodificar el contorno
+contorno_decodificado = decodificar_cadena(codificacion_cadena)
+
+# Mostrar la imagen con los contornos
+cv2.imshow("Contornos", imagen_contornos)
+cv2.imwrite("cadena.jpg",imagen_contornos)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
