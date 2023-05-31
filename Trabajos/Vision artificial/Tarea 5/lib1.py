@@ -1,3 +1,5 @@
+#Repositorio en github: https://github.com/Atrabilis/UACH/blob/main/Trabajos/Vision%20artificial/Tarea%205/lib1.py
+
 import numpy as np  #Importa la librería numpy para operaciones numéricas
 
 class Neurona:
