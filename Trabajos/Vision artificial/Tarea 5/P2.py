@@ -17,9 +17,9 @@ import numpy as np  #Importa la librería numpy
 from lib1 import *  #Importa la clase Neurona y las funciones de activación del archivo lib1.py
 
 #Capa de entrada
-neurona1 = Neurona(X1, pesos1, 0, escalon_unitario)  #Crea una neurona con entradas X1, pesos1 y función de activación escalon unitario
-neurona2 = Neurona(X1, pesos2, 0, escalon_unitario)  #Crea una neurona con entradas X1, pesos2 y función de activación escalon_unitario
-neurona3 = Neurona(X1, pesos3, 0, escalon_unitario)  #Crea una neurona con entradas X1, pesos3 y función de activación escalon_unitario
+neurona1 = Neurona(X2, pesos1, 0, signo)  #Crea una neurona con entradas X1, pesos1 y función de activación signo
+neurona2 = Neurona(X2, pesos2, 0, signo)  #Crea una neurona con entradas X1, pesos2 y función de activación signo
+neurona3 = Neurona(X2, pesos3, 0, signo)  #Crea una neurona con entradas X1, pesos3 y función de activación signo
 
 #Capa Escondida
 neurona4 = Neurona(np.reshape([neurona1.salida(),
@@ -27,24 +27,24 @@ neurona4 = Neurona(np.reshape([neurona1.salida(),
             neurona3.salida()], (-1, 1)),
                    pesos4,
                    0,
-                   escalon_unitario)  #Crea una neurona con entradas formadas por las salidas de las neuronas 1, 2 y 3,
-                                      #pesos4 y función de activación escalon_unitario
+                   signo)  #Crea una neurona con entradas formadas por las salidas de las neuronas 1, 2 y 3,
+                                      #pesos4 y función de activación signo
 
 neurona5 = Neurona(np.reshape([neurona1.salida(),
             neurona2.salida(),
             neurona3.salida()], (-1, 1)),
                    pesos5,
                    0,
-                   escalon_unitario)  #Crea una neurona con entradas formadas por las salidas de las neuronas 1, 2 y 3,
-                                      #pesos5 y función de activación escalon_unitario
+                   signo)  #Crea una neurona con entradas formadas por las salidas de las neuronas 1, 2 y 3,
+                                      #pesos5 y función de activación signo
 
 #Capa Salida
 neurona6 = Neurona(np.reshape([neurona4.salida(),
             neurona5.salida()], (-1, 1)),
                    pesos6,
                    0,
-                   escalon_unitario)  #Crea una neurona con entradas formadas por las salidas de las neuronas 4 y 5,
-                                      #pesos6 y función de activación escalon_unitario
+                   signo)  #Crea una neurona con entradas formadas por las salidas de las neuronas 4 y 5,
+                                      #pesos6 y función de activación signo
 
 #Imprime las salidas de todas las neuronas
 print("Salida neurona 1: {}\n"
