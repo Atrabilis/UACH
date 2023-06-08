@@ -32,7 +32,7 @@ class Perceptron():
         accuracy = np.sum(predictions == y) / y.shape[0]
         return accuracy
 
-
+"""
 # Entrenamiento del Perceptrón
 
 ppn = Perceptron(num_features=2) # num_features es el número de componentes del vector de entrada
@@ -40,7 +40,7 @@ ppn = Perceptron(num_features=2) # num_features es el número de componentes del
 X_train = np.array([[0, 0], [0, 1], [1, 0], [1, 1]]) # Ingresar entradas como vector fila
 y_train = np.array([0, 0, 0, 1]) # Ingresar salidas deseadas para cada entrada
 
-ppn.train(X_train, y_train, epochs=5) # epochs son el número de iteraciones del algoritmo de entrenamiento (en cada iteración se aplica la regla de aprendizaje a todos los ejemplos de entrenamiento)
+ppn.train(X_train, y_train, epochs=1) # epochs son el número de iteraciones del algoritmo de entrenamiento (en cada iteración se aplica la regla de aprendizaje a todos los ejemplos de entrenamiento)
 
 print('Parámetros del modelo:\n\n')
 print('  Pesos: %s\n' % ppn.weights) # Despliega los pesos del perceptrón
@@ -74,3 +74,4 @@ plt.scatter(X_train[y_train==1, 0], X_train[y_train==1, 1], label='class 1', mar
 
 plt.legend(loc='upper right')
 plt.show()
+"""

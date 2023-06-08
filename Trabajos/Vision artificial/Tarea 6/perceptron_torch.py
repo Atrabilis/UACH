@@ -38,7 +38,7 @@ class Perceptron():
         predictions = self.forward(x).reshape(-1)
         accuracy = torch.sum(predictions == y).float() / y.shape[0]
         return accuracy
-
+"""
 # Entrenamiento del Perceptrón
 
 ppn = Perceptron(num_features=2) # num_features es el número de componentes del vector de entrada
@@ -88,4 +88,4 @@ plt.scatter(X_train2[y_train2==0, 0], X_train2[y_train2==0, 1], label='class 0',
 plt.scatter(X_train2[y_train2==1, 0], X_train2[y_train2==1, 1], label='class 1', marker='s')
 
 plt.legend(loc='upper right')
-plt.show()
+plt.show()"""
