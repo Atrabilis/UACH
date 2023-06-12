@@ -35,5 +35,6 @@ w1, b1 = perceptronAND.weights, perceptronAND.bias  # Se obtienen los pesos y se
 w2, b2 = perceptronIMPLICA.weights, perceptronIMPLICA.bias  # Se obtienen los pesos y sesgo del perceptrón de implicación entrenado
 grafo_linea_desicion(w1.numpy(), b1.numpy(), inputs.numpy(), labelsAND.numpy())  # Se grafica la línea de decisión para el perceptrón AND
 grafo_linea_desicion(w2.numpy(), b2.numpy(), inputs.numpy(), labelsIMPLICA.numpy())  # Se grafica la línea de decisión para el perceptrón de implicación
-
+print(perceptronAND.bias)
+print(perceptronIMPLICA.bias)
 

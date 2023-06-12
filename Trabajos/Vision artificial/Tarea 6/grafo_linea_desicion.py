@@ -14,5 +14,5 @@ def grafo_linea_desicion(w, b, inputs, labels):
     plt.scatter(inputs[labels == 1, 0], inputs[labels == 1, 1], label='class 1', marker='s')  # Graficar los puntos de clase 1
 
     # Configuración de la leyenda y visualización del gráfico
-    plt.legend(loc='upper right')  # Mostrar la leyenda en la esquina superior derecha
+    plt.legend(loc='best')  # Mostrar la leyenda en la esquina superior derecha
     plt.show()  # Mostrar el gráfico
