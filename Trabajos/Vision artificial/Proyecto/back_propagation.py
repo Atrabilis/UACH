@@ -29,26 +29,48 @@ y = np.array([int(row[2]) for row in datos])
 # Dividir los datos en conjuntos de entrenamiento y validación
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Función para cargar y preprocesar una imagen
+# Función para cargar y preprocesar una imagen con RLE
 def cargar_y_preprocesar_imagen(ruta):
     imagen = Image.open(ruta).convert('L')  # Convertir la imagen a escala de grises
     imagen = imagen.resize((388, 374))  # Redimensionar la imagen a 388x374
-    imagen = np.array(imagen)  # Convertir la imagen a un arreglo numpy
-    imagen = np.transpose(imagen, (1, 0))  # Transponer las dimensiones de la imagen
-    return imagen
 
-# Cargar y preprocesar los datos de entrenamiento y validación
-X_train = np.array([cargar_y_preprocesar_imagen(ruta) for ruta in X_train])
-X_val = np.array([cargar_y_preprocesar_imagen(ruta) for ruta in X_val])
+    # Codificar la imagen con RLE
+    pixels = np.array(imagen).ravel()  # Obtener los píxeles de la imagen como una secuencia 1D
+    values = []
+    lengths = []
+    current_value = pixels[0]
+    current_length = 1
+    for pixel in pixels[1:]:
+        if pixel == current_value:
+            current_length += 1
+        else:
+            values.append(current_value)
+            lengths.append(current_length)
+            current_value = pixel
+            current_length = 1
+    values.append(current_value)
+    lengths.append(current_length)
 
-# Normalizar los datos de entrenamiento y validación
-X_train = preprocess_input(X_train)
-X_val = preprocess_input(X_val)
+    # Normalizar los valores entre 0 y 1
+    values = np.array(values) / 255.0
+
+    return values, lengths
+
+# Cargar y preprocesar los datos de entrenamiento y validación con RLE
+X_train = [cargar_y_preprocesar_imagen(ruta) for ruta in X_train]
+X_val = [cargar_y_preprocesar_imagen(ruta) for ruta in X_val]
+
+# Obtener los valores y longitudes de los datos
+X_train_values = [values for values, lengths in X_train]
+X_train_lengths = [lengths for values, lengths in X_train]
+X_val_values = [values for values, lengths in X_val]
+X_val_lengths = [lengths for values, lengths in X_val]
 
 # Crear el modelo de la red neuronal
 model = Sequential()
-model.add(Flatten(input_shape=(388, 374)))  # Capa de entrada
-model.add(Dense(128, activation='relu'))
+model.add(Flatten(input_shape=(len(X_train_values[0]),)))  # Capa de entrada con la longitud de la secuencia RLE
+model.add(Dense(32, activation='relu'))
+model.add(Dense(32, activation='relu'))
 model.add(Dense(10, activation='softmax'))  # Capa de salida con 10 neuronas y función de activación Softmax
 
 # Compilar el modelo
@@ -67,9 +89,9 @@ def key_pressed():
     return msvcrt.kbhit() and msvcrt.getch() == b','
 
 # Bucle principal
-while epoch <= 100:
+while epoch <= 1000:
     # Entrenar el modelo durante una época
-    history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=1, batch_size=32, verbose=1)
+    history = model.fit(X_train_lengths, y_train, validation_data=(X_val_lengths, y_val), epochs=1, batch_size=32, verbose=1)
 
     # Obtener la precisión en los datos de entrenamiento y validación
     train_accuracy = history.history['accuracy'][0]  # Precisión en entrenamiento
