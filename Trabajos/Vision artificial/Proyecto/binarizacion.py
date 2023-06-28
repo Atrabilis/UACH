@@ -25,10 +25,6 @@ def procesamiento_de_imagen(imagen):
     _, imagen_binarizada_otsu = cv2.threshold(imagen_reducida, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 
     # Mostrar las imágenes resultantes
-    cv2.imshow("Imagen Original", imagen)
-    cv2.imshow("Filtro Bilateral", imagen_filtrada)
-    cv2.imshow("Reducción de Resolución", imagen_reducida)
-    cv2.imshow("Binarización Sauvola", imagen_binarizada_sauvola)
     cv2.imshow("Binarización Otsu", imagen_binarizada_otsu)
     cv2.waitKey(0)
     cv2.destroyAllWindows()

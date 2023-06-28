@@ -14,7 +14,7 @@ def procesamiento_de_imagen(imagen):
     imagen_filtrada = cv2.bilateralFilter(imagen_gris, diametro_bilateral, sigma_color_bilateral, sigma_space_bilateral)
 
     # Reducción de resolución utilizando decimación
-    factor_reduccion = 3
+    factor_reduccion = 2
     imagen_reducida = imagen_filtrada[::factor_reduccion, ::factor_reduccion]
 
     # Binarización utilizando el método de Otsu
@@ -27,32 +27,25 @@ def procesamiento_de_imagen(imagen):
 
 
 def detectar_minutiae(imagen_binaria):
-    # Crear un kernel de 3x3 para el operador de Hessiano
+    # Crear un kernel de 3x3 para el operador de cruzamiento de crestas
     kernel = np.array([[1, 1, 1],
-                       [1, -8, 1],
-                       [1, 1, 1]], dtype=np.float32)
+                       [1, 0, 1],
+                       [1, 1, 1]], dtype=np.uint8)
 
-    # Aplicar el operador de Hessiano para detectar los puntos de bifurcación y terminación
-    hessiano = cv2.filter2D(imagen_binaria, -1, kernel)
+    # Aplicar el operador de cruzamiento de crestas para detectar los puntos de bifurcación y terminación
+    puntos_bifurcacion = []
+    puntos_terminacion = []
 
-    # Encontrar los puntos de bifurcación y terminación
-    puntos_bifurcacion = np.argwhere(hessiano < 0)
-    puntos_terminacion = np.argwhere(hessiano > 0)
+    # Recorrer la imagen binaria
+    for i in range(1, imagen_binaria.shape[0] - 1):
+        for j in range(1, imagen_binaria.shape[1] - 1):
+            if imagen_binaria[i, j] == 0:  # Punto de la cresta
+                vecindario = imagen_binaria[i-1:i+2, j-1:j+2]
+                cruzamientos = np.sum(vecindario * kernel) / 255  # Contar los cruzamientos
+
+                if cruzamientos == 3:  # Bifurcación
+                    puntos_bifurcacion.append((j, i))
+                elif cruzamientos == 1:  # Terminación
+                    puntos_terminacion.append((j, i))
 
     return puntos_bifurcacion, puntos_terminacion
-
-
-# Cargar la imagen de huella dactilar
-imagen_huella = cv2.imread("Dataset/101_1.tif")
-
-# Aplicar el procesamiento de imagen y la detección de minutiae
-imagen_binarizada, puntos_bifurcacion, puntos_terminacion = procesamiento_de_imagen(imagen_huella)
-
-# Mostrar la imagen binarizada
-cv2.imshow("Imagen Binarizada", imagen_binarizada)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-
-# Imprimir los puntos de bifurcación y terminación
-print("Puntos de bifurcación:", puntos_bifurcacion)
-print("Puntos de terminación:", puntos_terminacion)
