@@ -45,10 +45,8 @@ model = tf.keras.models.Sequential([
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
 # Entrenar el modelo
-history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=10, batch_size=32)
+history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=100, batch_size=32)
 
-# Guardar el modelo entrenado
-#model.save('modelo_huellas.h5')
 
 # Obtener la precisión de entrenamiento y prueba del historial
 train_acc = history.history['accuracy']
@@ -63,3 +61,6 @@ plt.xlabel('Epochs')
 plt.ylabel('Accuracy')
 plt.legend()
 plt.show()
+
+# Guardar el modelo entrenado
+#model.save('modelo_huellas.h5')
