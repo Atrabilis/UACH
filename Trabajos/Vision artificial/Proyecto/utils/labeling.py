@@ -5,7 +5,7 @@ import random
 os.system("cls")
 
 # Ruta de la carpeta que contiene las imágenes
-carpeta_imagenes = 'Dataset'
+carpeta_imagenes = 'dataset'
 
 # Obtener la lista de archivos en la carpeta
 archivos = os.listdir(carpeta_imagenes)
