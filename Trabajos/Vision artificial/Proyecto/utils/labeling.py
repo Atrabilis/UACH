@@ -25,7 +25,7 @@ for archivo in archivos:
     datos.append([ruta, archivo, etiqueta -101])
 
 # Guardar los nombres de archivo, rutas y etiquetas en un archivo CSV
-with open('etiquetas.csv', 'w', newline='') as csvfile:
+with open('Data.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(['Ruta', 'Archivo', 'Etiqueta'])
     writer.writerows(datos)
