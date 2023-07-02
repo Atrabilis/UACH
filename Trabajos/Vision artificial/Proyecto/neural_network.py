@@ -51,7 +51,7 @@ num_labels = len(label_encoder.classes_)
 
 # Procesar las imágenes y ajustar su tamaño
 processed_features = []
-max_image_size = (100, 100)  # Tamaño máximo deseado para las imágenes
+max_image_size = (64, 64)  # Tamaño máximo deseado para las imágenes
 for ruta_imagen in features['Ruta']:
     processed_image = procesar_imagen(ruta_imagen)
     resized_image = cv2.resize(processed_image, max_image_size)
@@ -66,12 +66,12 @@ train_features, test_features, train_labels, test_labels = train_test_split(feat
 # Crear la red neuronal
 model = tf.keras.models.Sequential([
     tf.keras.layers.Flatten(input_shape=features_processed.shape[1:]),
-    tf.keras.layers.Dense(256, activation='relu'),
-    tf.keras.layers.Dropout(0.5),  # Capa de Dropout con una tasa de 0.5
+    tf.keras.layers.Dense(256, activation='relu'),#, kernel_regularizer=tf.keras.regularizers.l1_l2(l1=0.1, l2=0.1)
+    #tf.keras.layers.Dropout(0.5),  # Capa de Dropout con una tasa de 0.5
+    tf.keras.layers.Dense(128, activation='relu'),#, kernel_regularizer=tf.keras.regularizers.l1_l2(l1=0.1, l2=0.1)
+    #tf.keras.layers.Dropout(0.25),
     tf.keras.layers.Dense(128, activation='relu'),
-    tf.keras.layers.Dropout(0.5),
-    tf.keras.layers.Dense(64, activation='relu'),
-    tf.keras.layers.Dense(32, activation='relu'),
+    #tf.keras.layers.Dropout(0.125),#, kernel_regularizer=tf.keras.regularizers.l1_l2(l1=0.1, l2=0.1)
     tf.keras.layers.Dense(num_labels, activation='softmax')  # Capa de salida con el número de etiquetas
 ])
 
@@ -85,7 +85,7 @@ class StopTrainingCallback(tf.keras.callbacks.Callback):
             self.model.stop_training = True
 
 # Entrenar el modelo con el callback definido
-history = model.fit(train_features, train_labels, epochs=5000, batch_size=128, validation_data=(test_features, test_labels), callbacks=[StopTrainingCallback()])
+history = model.fit(train_features, train_labels, epochs=10000, batch_size=64, validation_data=(test_features, test_labels), callbacks=[StopTrainingCallback()])
 
 # Obtener el historial de precisión en entrenamiento y validación
 train_accuracy = history.history['accuracy']
