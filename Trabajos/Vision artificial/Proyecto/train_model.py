@@ -1,7 +1,7 @@
 import pandas as pd
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Flatten
+from tensorflow.keras.layers import Dense, Flatten, Dropout
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 import os
@@ -49,8 +49,14 @@ test_labels = tf.keras.utils.to_categorical(test_data['Etiqueta'])
 # Crear el modelo de la red neuronal
 model = Sequential()
 model.add(Flatten(input_shape=train_images.shape[1:]))  # Aplanar la imagen en un vector
+#model.add(Dropout(.5))
+model.add(Dense(512, activation='relu'))
+#model.add(Dropout(.5))
+model.add(Dense(256, activation='relu'))
+#model.add(Dropout(.5))
+model.add(Dense(128, activation='relu'))
+#model.add(Dropout(.5))
 model.add(Dense(64, activation='relu'))
-model.add(Dense(64, activation='relu'))  # Capa oculta con 64 neuronas
 model.add(Dense(40, activation='softmax'))  # Capa de salida con activación softmax
 
 # Compilar el modelo
@@ -64,7 +70,7 @@ def stop_training():
 keyboard.on_press_key("f10", lambda _: stop_training())
 
 # Entrenar el modelo
-history = model.fit(train_images, train_labels, epochs=500, batch_size=64, validation_data=(val_images, val_labels),
+history = model.fit(train_images, train_labels, epochs=1000, batch_size=1024, validation_data=(val_images, val_labels),
                     callbacks=[tf.keras.callbacks.LambdaCallback(on_epoch_end=lambda epoch, logs: stop_training() if model.stop_training else None)])
 
 # Evaluar el modelo en el conjunto de prueba

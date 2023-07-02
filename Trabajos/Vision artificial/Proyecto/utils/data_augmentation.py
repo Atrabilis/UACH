@@ -36,7 +36,49 @@ def apply_augmentation(df):
         brightness_image = np.clip(image + 50, 0, 255).astype(np.uint8)
         augmented_images.append(brightness_image)
         augmented_labels.append(label)
+
+        contrast_image = np.clip(image * 1.5, 0, 255).astype(np.uint8)
+        augmented_images.append(contrast_image)
+        augmented_labels.append(label)
         
+        scaled_image = cv2.resize(image, (0, 0), fx=1.2, fy=1.2)
+        augmented_images.append(scaled_image)
+        augmented_labels.append(label)
+
+        # Operación de desplazamiento horizontal
+        shifted_image = np.roll(image, 20, axis=1)
+        augmented_images.append(shifted_image)
+        augmented_labels.append(label)
+
+        # Operación de desplazamiento vertical
+        shifted_image = np.roll(image, 20, axis=0)
+        augmented_images.append(shifted_image)
+        augmented_labels.append(label)
+
+        # Operación de cambio de perspectiva
+        rows, cols = image.shape
+        pts1 = np.float32([[10, 10], [cols - 10, 10], [10, rows - 10], [cols - 10, rows - 10]])
+        pts2 = np.float32([[0, 0], [cols, 0], [0, rows], [cols, rows]])
+        M = cv2.getPerspectiveTransform(pts1, pts2)
+        perspective_image = cv2.warpPerspective(image, M, (cols, rows))
+        augmented_images.append(perspective_image)
+        augmented_labels.append(label)
+
+        # Operación de ruido gaussiano
+        mean = 0
+        stddev = 10
+        noise = np.random.normal(mean, stddev, image.shape)
+        noisy_image = np.clip(image + noise, 0, 255).astype(np.uint8)
+        augmented_images.append(noisy_image)
+        augmented_labels.append(label)
+
+        # Operación de recorte aleatorio
+        x = np.random.randint(0, cols - 20)
+        y = np.random.randint(0, rows - 20)
+        cropped_image = image[y:y+20, x:x+20]
+        augmented_images.append(cropped_image)
+        augmented_labels.append(label)
+
         # Agregar las imágenes y etiquetas aumentadas al conjunto de datos
         for augmented_image, augmented_label in zip(augmented_images, augmented_labels):
             augmented_data.append({'Ruta': image_path, 'Etiqueta': augmented_label, 'Imagen': augmented_image})
@@ -46,7 +88,7 @@ def apply_augmentation(df):
     
     return augmented_df
 
-augmented_df =  df        #############apply_augmentation(df)
+augmented_df = apply_augmentation(df)
 
 # Dividir los datos aumentados en conjuntos de entrenamiento, validación y prueba
 train_df, test_df = train_test_split(augmented_df, test_size=0.2, random_state=42)
@@ -61,6 +103,9 @@ val_df.to_csv(val_csv, index=False)
 test_df.to_csv(test_csv, index=False)
 
 # Imprimir el número de muestras en cada conjunto de datos
+print("Número de muestras antes del aumento de datos: ", len(df) )
 print("Número de muestras en el conjunto de entrenamiento:", len(train_df))
 print("Número de muestras en el conjunto de validación:", len(val_df))
 print("Número de muestras en el conjunto de prueba:", len(test_df))
+print("Número de muestras despues del aumento de datos: ", len(train_df)+len(val_df)+len(test_df))
+
