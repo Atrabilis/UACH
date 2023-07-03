@@ -1,5 +1,4 @@
 # Ignorar archivos de modelos de TensorFlow/Keras
-*.h5
 *.hdf5
 *.ckpt
 *.ckpt.data-*
