@@ -1,1 +1,11 @@
+# Ignorar archivos de modelos de TensorFlow/Keras
+*.h5
+*.hdf5
+*.ckpt
+*.ckpt.data-*
+*.ckpt.index
+*.ckpt.meta
+# Ignorar directorio de checkpoints de TensorFlow/Keras
+checkpoint/
+# Ignorar cache
 __pycache__/
