@@ -51,7 +51,7 @@ test_labels = tf.keras.utils.to_categorical(test_data['Etiqueta'])
 model = Sequential()
 model.add(Flatten(input_shape=train_images.shape[1:]))  # Aplanar la imagen en un vector
 #model.add(Dropout(.5))
-model.add(Dense(128, activation='relu'))
+model.add(Dense(256, activation='relu'))
 #model.add(Dropout(.5))
 model.add(Dense(40, activation='softmax'))  # Capa de salida con activación softmax
 
