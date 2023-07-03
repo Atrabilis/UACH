@@ -59,8 +59,7 @@ model.add(Dense(128, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(40, activation='softmax'))  # Capa de salida con activación softmax
 
-# Compilar el modelo
-model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
+
 
 # Definir una función para detener el entrenamiento
 def stop_training():
@@ -70,8 +69,21 @@ def stop_training():
 keyboard.on_press_key("f10", lambda _: stop_training())
 
 # Entrenar el modelo
+desired_acc = 1
+
+# Definir una función para detener el entrenamiento cuando se alcanza la precisión objetivo en entrenamiento y validación
+class StopTrainingCallback(tf.keras.callbacks.Callback):
+    def on_epoch_end(self, epoch, logs={}):
+        if logs.get('accuracy') >= desired_acc and logs.get('val_accuracy') >= desired_acc:
+            self.model.stop_training = True
+
+
+# Compilar el modelo
+model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
+
+# Entrenar el modelo con la callback StopTrainingCallback
 history = model.fit(train_images, train_labels, epochs=1000, batch_size=1024, validation_data=(val_images, val_labels),
-                    callbacks=[tf.keras.callbacks.LambdaCallback(on_epoch_end=lambda epoch, logs: stop_training() if model.stop_training else None)])
+                    callbacks=[StopTrainingCallback()])
 
 # Evaluar el modelo en el conjunto de prueba
 #loss, accuracy = model.evaluate(test_images, test_labels)
@@ -86,3 +98,6 @@ plt.xlabel('Epoch')
 plt.ylabel('Accuracy')
 plt.legend(['Train', 'Validation'], loc='upper left')
 plt.show()
+
+# Guardar el modelo
+model.save('modelo.h5')
