@@ -4,16 +4,16 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
 # Cargar el modelo guardado
-model = load_model('modelo.h5')
+model = load_model('modelo_entrenado.h5')
 
 # Función para cargar y preprocesar la imagen
 def load_and_preprocess_image(image_path):
-    image = load_img(image_path, target_size=(50, 50))  # Asegurarse de que la imagen tenga el mismo tamaño que las imágenes de entrenamiento
+    image = image = load_img(image_path, target_size=(50, 50), color_mode='grayscale')  # Asegurarse de que la imagen tenga el mismo tamaño que las imágenes de entrenamiento
     image_array = img_to_array(image) / 255.0  # Normalizar los valores de píxel entre 0 y 1
     return image_array
 
 # Directorio que contiene las imágenes
-dataset_dir = 'Procesadas'
+dataset_dir = 'contornos'
 
 # Obtener la lista de archivos en el directorio
 image_files = os.listdir(dataset_dir)

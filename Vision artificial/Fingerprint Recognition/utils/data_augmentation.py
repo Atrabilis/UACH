@@ -1,10 +1,13 @@
 import cv2
 import numpy as np
 import pandas as pd
+import os
 from sklearn.model_selection import train_test_split
 
+os.system("cls")
+
 # Cargar el archivo CSV con los datos procesados
-csv_file = 'data.csv'
+csv_file = 'datos.csv'
 df = pd.read_csv(csv_file)
 
 # Aplicar aumentación de datos y agregar las nuevas imágenes y etiquetas al DataFrame
@@ -12,8 +15,8 @@ def apply_augmentation(df):
     augmented_data = []
     
     for index, row in df.iterrows():
-        image_path = row['Ruta']
-        label = row['Etiqueta']
+        image_path = row["Contour Image"]
+        label = row['Label']
         
         # Leer la imagen original
         image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
