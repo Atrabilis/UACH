@@ -57,21 +57,25 @@ history = model.fit(X_train_images, y_train_encoded, epochs=epocas, batch_size=5
 # Evaluar el modelo en el conjunto de prueba
 loss, accuracy = model.evaluate(X_test_images, y_test_encoded)
 
-# Obtener el historial de precisión y pérdida durante el entrenamiento
-train_acc = history.history['accuracy']
-val_acc = history.history['val_accuracy']
+# Obtener historial de precisión y pérdida
+train_accuracy = history.history['accuracy']
+val_accuracy = history.history['val_accuracy']
+test_accuracy = accuracy
 train_loss = history.history['loss']
 val_loss = history.history['val_loss']
 
-# Graficar el historial de precisión y pérdida combinados
-plt.plot(train_acc, label='Train Accuracy')
-plt.plot(val_acc, label='Validation Accuracy')
+# Crear gráfico
+plt.figure(figsize=(10, 6))  # Ajustar tamaño del gráfico
+plt.plot(train_accuracy, label='Train Accuracy')
+plt.plot(val_accuracy, label='Validation Accuracy')
+plt.axhline(test_accuracy, color='r', linestyle='--', label='Test Accuracy')
 plt.plot(train_loss, label='Train Loss')
 plt.plot(val_loss, label='Validation Loss')
-plt.title('Training and Validation Metrics')
-plt.xlabel('Epoch')
-plt.ylabel('Metrics')
-plt.legend()
+plt.xlabel('Epochs')
+plt.ylabel('Value')
+plt.title('Training, Validation, and Test Metrics')
+plt.legend()  # Mostrar leyenda
+plt.grid(True)  # Agregar cuadrícula al gráfico
 plt.show()
 
 # Listado exhaustivo de métricas
