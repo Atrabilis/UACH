@@ -79,8 +79,8 @@ plt.grid(True)  # Agregar cuadrícula al gráfico
 plt.show()
 
 # Listado exhaustivo de métricas
-print("Train Accuracy:", train_acc[-1])
-print("Validation Accuracy:", val_acc[-1])
+print("Train Accuracy:", train_accuracy[-1])
+print("Validation Accuracy:", train_accuracy[-1])
 print("Train Loss:", train_loss[-1])
 print("Validation Loss:", val_loss[-1])
 print("Test Accuracy:", accuracy)
