@@ -1,13 +1,18 @@
-import csv
-import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
+from tensorflow.keras.utils import plot_model
 from keras.layers import Dense, Flatten
 from keras.utils import to_categorical
+import csv
 import cv2
 import os
 import pandas as pd
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Specify the Graphviz executable path
+os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin' 
 
 os.system("cls")
 
@@ -66,17 +71,20 @@ val_loss = history.history['val_loss']
 
 # Crear gráfico
 plt.figure(figsize=(10, 6))  # Ajustar tamaño del gráfico
-plt.plot(train_accuracy, label='Train Accuracy')
-plt.plot(val_accuracy, label='Validation Accuracy')
-plt.axhline(test_accuracy, color='r', linestyle='--', label='Test Accuracy')
-plt.plot(train_loss, label='Train Loss')
-plt.plot(val_loss, label='Validation Loss')
-plt.xlabel('Epochs')
-plt.ylabel('Value')
-plt.title('Training, Validation, and Test Metrics')
-plt.legend()  # Mostrar leyenda
+plt.plot(train_accuracy, label='Precisión de entrenamiento')
+plt.plot(val_accuracy, label='Precisión de validación')
+plt.axhline(test_accuracy, color='r', linestyle='--', label='Precisión de prueba')
+plt.plot(train_loss, label='Pérdida de entrenamiento')
+plt.plot(val_loss, label='Pérdida de validación')
+plt.xlabel('Épocas', fontsize=25)
+plt.ylabel('Valor', fontsize=25)
+plt.title('Métricas de Entrenamiento, Validación y Prueba', fontsize=25)
+plt.legend(fontsize=20)  # Mostrar leyenda
 plt.grid(True)  # Agregar cuadrícula al gráfico
+plt.xticks(fontsize=20)
+plt.yticks(fontsize=20)
 plt.show()
+
 
 # Listado exhaustivo de métricas
 print("Train Accuracy:", train_accuracy[-1])
@@ -85,6 +93,14 @@ print("Train Loss:", train_loss[-1])
 print("Validation Loss:", val_loss[-1])
 print("Test Accuracy:", accuracy)
 print("Test Loss:", loss)
+
+
+# Cargar el modelo
+model1 = tf.keras.models.load_model('modelo_entrenado.h5')
+
+# Generar la representación gráfica del modelo
+plot_model(model, to_file='model.png', show_shapes=True, show_dtype=False, show_layer_names=True, rankdir='TB', expand_nested=True, dpi=96, layer_range=None, show_layer_activations=True)
+
 
 # Guardar el modelo entrenado
 model.save('modelo_entrenado.h5')

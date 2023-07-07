@@ -3,9 +3,14 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, ConfusionMatrixDisplay
+from tensorflow.keras.utils import plot_model
+
+# Specify the Graphviz executable path
+os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'  # Replace with the actual Graphviz executable path on your system
 
 # Cargar el modelo guardado
 model = load_model('modelo_entrenado.h5')
@@ -53,6 +58,9 @@ print('Accuracy:', accuracy_score(true_labels, predicted_classes))
 print('Confusion Matrix:\n', confusion_matrix(true_labels, predicted_classes))
 print('Classification Report:\n', classification_report(true_labels, predicted_classes))
 
+# Mostrar la representación gráfica de la red neuronal y guardarla en un archivo
+plot_model(model, to_file='model.png', show_shapes=True, show_layer_names=True, dpi=96)
+
 # Calcular la matriz de confusión
 cm = confusion_matrix(true_labels, predicted_classes)
 
@@ -79,10 +87,10 @@ fig, ax = plt.subplots(figsize=(10, 10))
 # Crear un histograma de las probabilidades de predicción
 sns.histplot(predicted_probs, bins=10, kde=False, ax=ax)
 
-# Agregar título y etiquetas
-ax.set_title('Distribución de las Probabilidades de Predicción')
-plt.xlabel('Probabilidad de Predicción')
-plt.ylabel('Conteo')
+ax.set_title('Distribución de las Probabilidades de Predicción', fontsize=20)
+ax.set_xlabel('Probabilidad de Predicción', fontsize=20)
+ax.set_ylabel('Conteo', fontsize=20)
+
 
 # Mostrar la figura
 plt.show()
