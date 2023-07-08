@@ -1,6 +1,7 @@
 import numpy as np 
 import matplotlib.pyplot as plt
 
+
 class Backprop:
 
     def __init__(self, red_arquitectura, red_tfn):
@@ -99,7 +100,7 @@ class Backprop:
 
         num_ejem_entren = len(T[0][:])
         epoch = 0
-
+        
         while epoch < self.num_epochs:
         
             for index in range(num_ejem_entren):

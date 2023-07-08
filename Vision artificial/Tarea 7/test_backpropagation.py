@@ -1,6 +1,7 @@
 from backpropagation import* #Incorpora clase con Backpropagation
 import math # Sólo se utilizó para incorporar función seno y pi
-
+import os
+os.system("cls")
 # Parámetros de la red
 # [R S1 S2] Agregar elementos según número de capas deseado
 # Agregar una función de transferencia por cada capa de la red 1:sigmoidal, 2:tanh,  3:lineal.
@@ -16,14 +17,20 @@ T = np.empty((1,6)) # El arreglo T contiene las salidas esperadas para las corre
 for k in range(len(P[0,:])):
   T[0][k] = math.sin(P[0,k]*math.pi/4) # Llena el vector de salida para este ejemplo
 
-#red2.W_init(2) # W_init se puede utilizar para inicializar todos los pesos con el valor deseado.
+red2.W_init(2) # W_init se puede utilizar para inicializar todos los pesos con el valor deseado.
 #red2.B_init(2) # B_init Se puede utilizar para inicializar todas las ganancias con el valor deseado.
 
 # Valores iniciales de pesos y ganancias (para este ejemplo)
 red2.W[1] = np.array([[-0.2], [0.5]])
+print(red2.W)
 red2.W[2] = np.array([[0.1, 0.3]])
+print(red2.W)
 red2.B[1] = np.array([[0.7], [-0.2]])
+print(red2.W)
 red2.B[2] = np.array([[0.8]])
+print(red2.W)
+
+print(red2.W)
 
 red2.train(P, T) # entrena la red neuronal
 
