@@ -5,19 +5,21 @@ from backpropagation import Backprop
 os.system("cls")
 
 # Definir la arquitectura de la red y las funciones de transferencia
-red_arquitectura = [9, 3, 2, 1]  # 9 entradas, 3 neuronas en la primera capa oculta, 2 en la segunda y 1 en la capa de salida
-red_tfn = [3, 3, 3]  # Función de transferencia lineal para todas las capas
+red_arquitectura = [1, 2, 1]  # 9 entradas, 3 neuronas en la primera capa oculta, 2 en la segunda y 1 en la capa de salida
+red_tfn = [2, 3]  # Función de transferencia lineal para todas las capas
 
 # Crear una instancia de la clase Backprop con la arquitectura de la red y las funciones de transferencia
 bp = Backprop(red_arquitectura, red_tfn)
-bp.alfa = 0.0001
+bp.alfa = 0.001
 bp.num_epochs = 10000
+bp.target_error = 1E-5
 
 
 # Datos de entrenamiento
-P = np.array([[1, -1, 1, -1, 1, -1, 1, -1, 1], [2, -2, 2, -2, 2, -2, 2, -2, 2], [3, -3, 3, -3, 3, -3, 3, -3, 3], [4, -4, 4, -4, 4, -4, 4, 4, 4]]).T  # Datos de entrada
-T = np.array([[1,2, 3, 4]])
+P = np.linspace(-2, 2, 6).reshape(-1, 1).T
+T = np.sin(np.pi * P / 4)
 print(P.shape)
+
 
 # Entrenar la red
 bp.train(P, T)
@@ -50,3 +52,5 @@ for i in range(P.shape[1]):
     print("Salida esperada:", T[:, i])
     print("Salida de la red:", bp.sim(P[:, [i]]))
     print()
+
+print(bp.target_error <= 1E-5)
